@@ -20,19 +20,21 @@ public class Controller {
     }
 
     public void render(SpriteBatch batch) {
-        System.out.println(Gdx.graphics.getDeltaTime());
+        float delta = Gdx.graphics.getDeltaTime();
+        float speed = 3;
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            movePlayerTank(-1, 0);
+            movePlayerTank(-delta, 0, speed);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            movePlayerTank(1, 0);
+            movePlayerTank(delta, 0, speed);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            movePlayerTank(0, -1);
+            movePlayerTank(0, -delta, speed);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            movePlayerTank(0, 1);
+            movePlayerTank(0, delta, speed);
         }
+
         draw(batch);
     }
 
@@ -67,12 +69,9 @@ public class Controller {
         }
     }
 
-    public void movePlayerTank(int x, int y) {
+    public void movePlayerTank(float x, float y, float speed) {
         PlayerTank playerTank = _terrain.getPlayerTank();
-        int currentX = playerTank.getX();
-        int currentY = playerTank.getY();
-        playerTank.setX(currentX + x);
-        playerTank.setY(currentY + y);
-        // bucket.x += 200 * Gdx.graphics.getDeltaTime();
+        playerTank.setX(playerTank.getX() + (x * speed));
+        playerTank.setY(playerTank.getY() + (y * speed));
     }
 }
