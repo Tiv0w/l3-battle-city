@@ -55,4 +55,9 @@ public class PlayerTank extends GameElement {
             _y = 0;
         }
     }
+
+    public Projectile shoot() {
+        System.out.println("Shooting!");
+        return new Projectile(_x + (_size / 2), _y + (_size / 2), _direction);
+    }
 }

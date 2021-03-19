@@ -4,43 +4,38 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import java.util.List;
+import java.util.ArrayList;
 import model.*;
 import view.BattleScreen;
 import view.TextureFactory;
 
+
 public class Controller {
     public static final int ELEMENT_SIZE = 16;
+    public static final int PROJECTILES_MAX = 3;
     Terrain _terrain;
+    boolean _playerShooting = false;
+    List<Projectile> _projectiles;
 
     public Controller(int levelNumber) {
         _terrain = new Terrain(levelNumber);
-    }
-
-    public Terrain getCurrentTerrain() {
-        return _terrain;
+        _projectiles = new ArrayList<Projectile>();
     }
 
     public void render(SpriteBatch batch) {
-        float delta = Gdx.graphics.getDeltaTime();
-        PlayerTank playerTank = _terrain.getPlayerTank();
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            playerTank.move(-delta, 0);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            playerTank.move(delta, 0);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            playerTank.move(0, -delta);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            playerTank.move(0, delta);
-        }
-
+        handlePlayerTankMoving();
+        handlePlayerTankShooting();
+        handleProjectilesMoving();
         draw(batch);
+        cleanProjectiles();
     }
 
     public void draw(SpriteBatch batch) {
         drawStaticElements(batch);
+        for (Projectile p: _projectiles) {
+            drawProjectile(batch, p);
+        }
         drawPlayerTank(batch);
     }
 
@@ -95,4 +90,70 @@ public class Controller {
 
         batch.draw(texture, xValue, yValue, elemSize/2, elemSize/2, elemSize, elemSize, 1, 1, tankRotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
     }
+
+    private void drawProjectile(SpriteBatch batch, Projectile p) {
+        Texture texture = TextureFactory.getInstance().getProjectile();
+
+        float xValue = p.getX() * ELEMENT_SIZE;
+        float yValue = (_terrain.getHeight() - p.getSize() - p.getY()) * ELEMENT_SIZE;
+        float elemSize = ELEMENT_SIZE * p.getSize();
+        int projectileRotation;
+        switch (p.getDirection()) {
+        case DOWN:
+            projectileRotation = 0; break;
+        case RIGHT:
+            projectileRotation = 90; break;
+        case UP:
+            projectileRotation = 180; break;
+        case LEFT:
+            projectileRotation = 270; break;
+        default:
+            projectileRotation = 0;
+        }
+
+        batch.draw(texture, xValue, yValue, elemSize/2, elemSize/2, elemSize, elemSize, 1, 1, projectileRotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
+    }
+
+    private void handlePlayerTankMoving() {
+        float delta = Gdx.graphics.getDeltaTime();
+        PlayerTank playerTank = _terrain.getPlayerTank();
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            playerTank.move(-delta, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            playerTank.move(delta, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            playerTank.move(0, -delta);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            playerTank.move(0, delta);
+        }
+    }
+
+    private void handlePlayerTankShooting() {
+        PlayerTank playerTank = _terrain.getPlayerTank();
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && !_playerShooting) {
+            if (_projectiles.size() < PROJECTILES_MAX) {
+                _projectiles.add(playerTank.shoot());
+            }
+            _playerShooting = true;
+        } else if (!Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            _playerShooting = false;
+        }
+    }
+
+    private void handleProjectilesMoving() {
+        for (Projectile p: _projectiles) {
+            p.move(Gdx.graphics.getDeltaTime());
+        }
+    }
+
+    private void cleanProjectiles() {
+        for (int i = 0; i < _projectiles.size(); i++) {
+            if (_projectiles.get(i).isOut())
+                _projectiles.remove(i);
+        }
+    }
+
 }
