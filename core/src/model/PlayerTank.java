@@ -5,15 +5,18 @@ import controller.Controller;
 
 public class PlayerTank extends GameElement {
     float _speed;
+    Direction _direction;
 
     public PlayerTank(float x, float y) {
         super(x, y, 2);
         _speed = 4;
+        _direction = Direction.UP;
     }
 
     public PlayerTank(float x, float y, float speed) {
         super(x, y, 2);
         _speed = speed;
+        _direction = Direction.UP;
     }
 
     public float getSpeed() {
@@ -24,7 +27,16 @@ public class PlayerTank extends GameElement {
         _speed = speed;
     }
 
+    public Direction getDirection() {
+        return _direction;
+    }
+
     public void move(float x, float y) {
+        if (x < 0) _direction = Direction.LEFT;
+        else if (x > 0) _direction = Direction.RIGHT;
+        else if (y < 0) _direction = Direction.UP;
+        else if (y > 0) _direction = Direction.DOWN;
+
         _x += x * _speed;
         _y += y * _speed;
 
