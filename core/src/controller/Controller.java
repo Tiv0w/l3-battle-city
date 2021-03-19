@@ -28,8 +28,10 @@ public class Controller {
                         t = TextureFactory.getInstance().getBrickWall();
                     } else if (e instanceof ConcreteWall) {
                         t = TextureFactory.getInstance().getConcreteWall();
-                    } else {
+                    } else if (e instanceof Vegetation) {
                         t = TextureFactory.getInstance().getVegetation();
+                    } else if (e instanceof PlayerTank) {
+                        t = TextureFactory.getInstance().getPlayerTank();
                     }
 
                     // TODO: mieux gérer l'affichage en fonction de la taille de la fenêtre

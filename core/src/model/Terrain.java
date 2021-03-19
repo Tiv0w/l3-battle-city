@@ -63,6 +63,8 @@ public class Terrain {
             return new BrickWall(col, row);
         case 'C':
             return new ConcreteWall(col, row);
+        case 'P':
+            return new PlayerTank(col, row);
         default:
             return new Empty(col, row);
         }
