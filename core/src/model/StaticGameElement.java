@@ -1,7 +1,7 @@
 package model;
 
 public class StaticGameElement extends GameElement {
-    public StaticGameElement(int x, int y) {
+    public StaticGameElement(float x, float y) {
         super(x, y);
     }
 }

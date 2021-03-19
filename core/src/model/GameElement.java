@@ -1,33 +1,34 @@
 package model;
 
 public class GameElement {
-    int _x, _y, _size;
+    float _x, _y;
+    int _size;
 
-    public GameElement(int x, int y) {
+    public GameElement(float x, float y) {
         _x = x;
         _y = y;
         _size = 1;
     }
 
-    public GameElement(int x, int y, int size) {
+    public GameElement(float x, float y, int size) {
         _x = x;
         _y = y;
         _size = size;
     }
 
-    public int getX() {
+    public float getX() {
         return _x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         _x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return _y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         _y = y;
     }
 

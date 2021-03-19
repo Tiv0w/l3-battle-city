@@ -1,7 +1,7 @@
 package model;
 
 public class Vegetation extends StaticGameElement {
-    public Vegetation(int x, int y) {
+    public Vegetation(float x, float y) {
         super(x, y);
     }
 }

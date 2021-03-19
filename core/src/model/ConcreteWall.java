@@ -1,7 +1,7 @@
 package model;
 
 public class ConcreteWall extends StaticGameElement {
-    public ConcreteWall(int x, int y) {
+    public ConcreteWall(float x, float y) {
         super(x, y);
     }
 }

@@ -54,9 +54,9 @@ public class Controller {
                     }
 
                     // TODO: mieux gérer l'affichage en fonction de la taille de la fenêtre
-                    int xValue = e.getX() * BattleScreen.ELEMENT_SIZE;
+                    float xValue = e.getX() * BattleScreen.ELEMENT_SIZE;
                     // Needed otherwise it is upside-down
-                    int yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * BattleScreen.ELEMENT_SIZE;
+                    float yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * BattleScreen.ELEMENT_SIZE;
 
                     if (t != null) {
                         int elemSize = BattleScreen.ELEMENT_SIZE * e.getSize();
