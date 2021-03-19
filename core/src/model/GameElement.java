@@ -2,7 +2,7 @@ package model;
 
 public class GameElement {
     float _x, _y;
-    int _size;
+    float _size;
 
     public GameElement(float x, float y) {
         _x = x;
@@ -10,7 +10,7 @@ public class GameElement {
         _size = 1;
     }
 
-    public GameElement(float x, float y, int size) {
+    public GameElement(float x, float y, float size) {
         _x = x;
         _y = y;
         _size = size;
@@ -32,7 +32,7 @@ public class GameElement {
         _y = y;
     }
 
-    public int getSize() {
+    public float getSize() {
         return _size;
     }
 }

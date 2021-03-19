@@ -64,7 +64,7 @@ public class Controller {
                     float yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * ELEMENT_SIZE;
 
                     if (t != null) {
-                        int elemSize = ELEMENT_SIZE * e.getSize();
+                        float elemSize = ELEMENT_SIZE * e.getSize();
                         batch.draw(t, xValue, yValue, elemSize, elemSize);
                     }
                 }
@@ -78,7 +78,7 @@ public class Controller {
 
         float xValue = tank.getX() * ELEMENT_SIZE;
         float yValue = (_terrain.getHeight() - tank.getSize() - tank.getY()) * ELEMENT_SIZE;
-        int elemSize = ELEMENT_SIZE * tank.getSize();
+        float elemSize = ELEMENT_SIZE * tank.getSize();
         int tankRotation;
         switch (tank.getDirection()) {
         case UP:
