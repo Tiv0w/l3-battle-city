@@ -19,8 +19,16 @@ public class GameElement {
         return _x;
     }
 
+    public void setX(int x) {
+        _x = x;
+    }
+
     public int getY() {
         return _y;
+    }
+
+    public void setY(int y) {
+        _y = y;
     }
 
     public int getSize() {

@@ -69,4 +69,17 @@ public class Terrain {
             return new Empty(col, row);
         }
     }
+
+    public PlayerTank getPlayerTank() {
+        for (int row = 0; row < _height; row++) {
+            for (int col = 0; col < _width; col++) {
+                GameElement elem = getElement(col, row);
+                if (elem instanceof PlayerTank) {
+                    PlayerTank tank = (PlayerTank)elem;
+                    return tank;
+                }
+            }
+        }
+        return null;
+    }
 }

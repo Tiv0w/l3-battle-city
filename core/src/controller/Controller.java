@@ -1,5 +1,7 @@
 package controller;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import model.*;
@@ -15,6 +17,23 @@ public class Controller {
 
     public Terrain getCurrentTerrain() {
         return _terrain;
+    }
+
+    public void render(SpriteBatch batch) {
+        System.out.println(Gdx.graphics.getDeltaTime());
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            movePlayerTank(-1, 0);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            movePlayerTank(1, 0);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            movePlayerTank(0, -1);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            movePlayerTank(0, 1);
+        }
+        draw(batch);
     }
 
     public void draw(SpriteBatch batch) {
@@ -46,5 +65,14 @@ public class Controller {
                 }
             }
         }
+    }
+
+    public void movePlayerTank(int x, int y) {
+        PlayerTank playerTank = _terrain.getPlayerTank();
+        int currentX = playerTank.getX();
+        int currentY = playerTank.getY();
+        playerTank.setX(currentX + x);
+        playerTank.setY(currentY + y);
+        // bucket.x += 200 * Gdx.graphics.getDeltaTime();
     }
 }

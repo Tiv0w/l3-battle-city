@@ -17,7 +17,7 @@ public class BattleScreen implements Screen {
     @Override
     public void render(float delta) {
         _batch.begin();
-        _controller.draw(_batch);
+        _controller.render(_batch);
         _batch.end();
     }
 
