@@ -40,6 +40,11 @@ public class Controller {
     }
 
     public void draw(SpriteBatch batch) {
+        drawStaticElements(batch);
+        drawPlayerTank(batch);
+    }
+
+    private void drawStaticElements(SpriteBatch batch) {
         batch.draw(TextureFactory.getInstance().getBackground(), 0, 0);
         for (int row = 0; row < _terrain.getHeight(); row++) {
             for (int col = 0; col < _terrain.getWidth(); col++) {
@@ -52,8 +57,6 @@ public class Controller {
                         t = TextureFactory.getInstance().getConcreteWall();
                     } else if (e instanceof Vegetation) {
                         t = TextureFactory.getInstance().getVegetation();
-                    } else if (e instanceof PlayerTank) {
-                        t = TextureFactory.getInstance().getPlayerTank();
                     }
 
                     float xValue = e.getX() * ELEMENT_SIZE;
@@ -67,5 +70,29 @@ public class Controller {
                 }
             }
         }
+    }
+
+    private void drawPlayerTank(SpriteBatch batch) {
+        PlayerTank tank = _terrain.getPlayerTank();
+        Texture texture = TextureFactory.getInstance().getPlayerTank();
+
+        float xValue = tank.getX() * ELEMENT_SIZE;
+        float yValue = (_terrain.getHeight() - tank.getSize() - tank.getY()) * ELEMENT_SIZE;
+        int elemSize = ELEMENT_SIZE * tank.getSize();
+        int tankRotation;
+        switch (tank.getDirection()) {
+        case UP:
+            tankRotation = 0; break;
+        case LEFT:
+            tankRotation = 90; break;
+        case DOWN:
+            tankRotation = 180; break;
+        case RIGHT:
+            tankRotation = 270; break;
+        default:
+            tankRotation = 0;
+        }
+
+        batch.draw(texture, xValue, yValue, elemSize/2, elemSize/2, elemSize, elemSize, 1, 1, tankRotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
     }
 }
