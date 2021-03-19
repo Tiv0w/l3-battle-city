@@ -31,7 +31,9 @@ public class PlayerTank extends GameElement {
         return _direction;
     }
 
-    public void move(float x, float y) {
+    public void move(float x, float y, Terrain terrain) {
+        float previous_x = _x;
+        float previous_y = _y;
         if (x < 0) _direction = Direction.LEFT;
         else if (x > 0) _direction = Direction.RIGHT;
         else if (y < 0) _direction = Direction.UP;
@@ -53,6 +55,16 @@ public class PlayerTank extends GameElement {
             _y = maxY;
         } else if (_y < 0) {
             _y = 0;
+        }
+
+        int colTile = (int)Math.floor(_x);
+        int rowTile = (int)Math.floor(_y);
+        System.out.println("colTile rowTile: " + colTile + " " + rowTile);
+
+        GameElement e = terrain.getElement(colTile, rowTile);
+        if ((e instanceof BrickWall) || (e instanceof ConcreteWall)) {
+            _x = previous_x;
+            _y = previous_y;
         }
     }
 

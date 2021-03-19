@@ -118,16 +118,16 @@ public class Controller {
         float delta = Gdx.graphics.getDeltaTime();
         PlayerTank playerTank = _terrain.getPlayerTank();
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            playerTank.move(-delta, 0);
+            playerTank.move(-delta, 0, _terrain);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            playerTank.move(delta, 0);
+            playerTank.move(delta, 0, _terrain);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            playerTank.move(0, -delta);
+            playerTank.move(0, -delta, _terrain);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            playerTank.move(0, delta);
+            playerTank.move(0, delta, _terrain);
         }
     }
 
