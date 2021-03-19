@@ -21,18 +21,18 @@ public class Controller {
 
     public void render(SpriteBatch batch) {
         float delta = Gdx.graphics.getDeltaTime();
-        float speed = 3;
+        PlayerTank playerTank = _terrain.getPlayerTank();
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            movePlayerTank(-delta, 0, speed);
+            playerTank.move(-delta, 0);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            movePlayerTank(delta, 0, speed);
+            playerTank.move(delta, 0);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            movePlayerTank(0, -delta, speed);
+            playerTank.move(0, -delta);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            movePlayerTank(0, delta, speed);
+            playerTank.move(0, delta);
         }
 
         draw(batch);
@@ -55,7 +55,6 @@ public class Controller {
                         t = TextureFactory.getInstance().getPlayerTank();
                     }
 
-                    // TODO: mieux gérer l'affichage en fonction de la taille de la fenêtre
                     float xValue = e.getX() * BattleScreen.ELEMENT_SIZE;
                     // Needed otherwise it is upside-down
                     float yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * BattleScreen.ELEMENT_SIZE;
@@ -67,11 +66,5 @@ public class Controller {
                 }
             }
         }
-    }
-
-    public void movePlayerTank(float x, float y, float speed) {
-        PlayerTank playerTank = _terrain.getPlayerTank();
-        playerTank.setX(playerTank.getX() + (x * speed));
-        playerTank.setY(playerTank.getY() + (y * speed));
     }
 }
