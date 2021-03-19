@@ -1,0 +1,27 @@
+26:26
+      CC      CC          .
+      CC      CC          .
+  BB  CC      BB  BB  BB  .
+  BB  CC      BB  BB  BB  .
+  BB        BBBB  BBCCBB  .
+  BB        BBBB  BBCCBB  .
+      BB          CC      .
+      BB          CC      .
+VV    BB    CC    BBVVBBCC.
+VV    BB    CC    BBVVBBCC.
+VVVV      BB    CC  VV    .
+VVVV      BB    CC  VV    .
+  BBBBBBVVVVVVCC    VVBB  .
+  BBBBBBVVVVVVCC    VVBB  .
+      CCVVBB  BB  BB  BB  .
+      CCVVBB  BB  BB  BB  .
+CCBB  CC  BB  BB      BB  .
+CCBB  CC  BB  BB      BB  .
+  BB  BB  BBBBBB  BBCCBB  .
+  BB  BB  BBBBBB  BBCCBB  .
+  BB  BB  BBBBBB          .
+  BB  BB  BBBBBB          .
+  BB              BB  BB  .
+  BB       BBBB   BB  BB  .
+  BB  BB   B  B   BBBBBB  .
+  BB  BB   B  B   BBBBBB  .

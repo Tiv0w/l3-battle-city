@@ -1,0 +1,15 @@
+BBBBBBBBBBBBBBB
+B   C   C     B
+B B C   B B B B
+B B    BB BCB B
+B   B     C   B
+BV  B  C  BVBCB
+BVV   B  C V  B
+B BBBvvvc  vb B
+B   cvb b b b B
+Bcb c b b   b B
+B b b bbb bcb B
+B b b bbb     B
+B b   xxx b b B
+B b b xFx bbb B
+BBBBBBBBBBBBBBB
