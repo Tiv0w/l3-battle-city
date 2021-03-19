@@ -1,5 +1,8 @@
 package model;
 
+import com.badlogic.gdx.Gdx;
+import controller.Controller;
+
 public class PlayerTank extends GameElement {
     float _speed;
 
@@ -24,5 +27,20 @@ public class PlayerTank extends GameElement {
     public void move(float x, float y) {
         _x += x * _speed;
         _y += y * _speed;
+
+        float maxX = (Gdx.graphics.getWidth() / Controller.ELEMENT_SIZE) - _size;
+        float maxY = (Gdx.graphics.getHeight() / Controller.ELEMENT_SIZE) - _size;
+
+        if (_x > maxX) {
+            _x = maxX;
+        } else if (_x < 0) {
+            _x = 0;
+        }
+
+        if (_y > maxY) {
+            _y = maxY;
+        } else if (_y < 0) {
+            _y = 0;
+        }
     }
 }
