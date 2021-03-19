@@ -9,6 +9,7 @@ import view.BattleScreen;
 import view.TextureFactory;
 
 public class Controller {
+    public static final int ELEMENT_SIZE = 16;
     Terrain _terrain;
 
     public Controller(int levelNumber) {
@@ -55,12 +56,12 @@ public class Controller {
                         t = TextureFactory.getInstance().getPlayerTank();
                     }
 
-                    float xValue = e.getX() * BattleScreen.ELEMENT_SIZE;
+                    float xValue = e.getX() * ELEMENT_SIZE;
                     // Needed otherwise it is upside-down
-                    float yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * BattleScreen.ELEMENT_SIZE;
+                    float yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * ELEMENT_SIZE;
 
                     if (t != null) {
-                        int elemSize = BattleScreen.ELEMENT_SIZE * e.getSize();
+                        int elemSize = ELEMENT_SIZE * e.getSize();
                         batch.draw(t, xValue, yValue, elemSize, elemSize);
                     }
                 }

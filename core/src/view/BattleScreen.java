@@ -7,7 +7,6 @@ import controller.Controller;
 public class BattleScreen implements Screen {
     SpriteBatch _batch;
     Controller _controller;
-    public static final int ELEMENT_SIZE = 16; // FIXME: ne plus utiliser une valeur en dur
 
     public BattleScreen(int levelNumber) {
         _batch = new SpriteBatch();
