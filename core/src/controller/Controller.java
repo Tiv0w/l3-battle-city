@@ -23,7 +23,7 @@ public class Controller {
             for (int col = 0; col < _terrain.getWidth(); col++) {
                 GameElement e = _terrain.getElement(col, row);
                 if (!(e instanceof Empty)) {
-                    Texture t;
+                    Texture t = null;
                     if (e instanceof BrickWall) {
                         t = TextureFactory.getInstance().getBrickWall();
                     } else if (e instanceof ConcreteWall) {
@@ -37,9 +37,12 @@ public class Controller {
                     // TODO: mieux gérer l'affichage en fonction de la taille de la fenêtre
                     int xValue = e.getX() * BattleScreen.ELEMENT_SIZE;
                     // Needed otherwise it is upside-down
-                    int yValue = ((_terrain.getHeight() - 1) - e.getY()) * BattleScreen.ELEMENT_SIZE;
+                    int yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * BattleScreen.ELEMENT_SIZE;
 
-                    batch.draw(t, xValue, yValue, BattleScreen.ELEMENT_SIZE, BattleScreen.ELEMENT_SIZE);
+                    if (t != null) {
+                        int elemSize = BattleScreen.ELEMENT_SIZE * e.getSize();
+                        batch.draw(t, xValue, yValue, elemSize, elemSize);
+                    }
                 }
             }
         }
