@@ -65,6 +65,8 @@ public class Terrain {
             return new ConcreteWall(col, row);
         case 'P':
             return new PlayerTank(col, row);
+        case 'H':
+            return new HunterTank(col, row);
         default:
             return new Empty(col, row);
         }
@@ -81,6 +83,22 @@ public class Terrain {
             }
         }
         return null;
+    }
+
+    public HunterTank[] getHunterTanks() {
+        HunterTank[] tanks = new HunterTank[2];
+        int index = 0;
+        for (int row = 0; row < _height; row++) {
+            for (int col = 0; col < _width; col++) {
+                GameElement elem = getElement(col, row);
+                if (elem instanceof HunterTank) {
+                    HunterTank tank = (HunterTank)elem;
+                    tanks[index] = tank;
+                    index++;
+                }
+            }
+        }
+        return tanks;
     }
 
     public void emptyTile(int col, int row) {

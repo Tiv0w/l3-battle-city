@@ -36,6 +36,7 @@ public class Controller {
         for (Projectile p: _projectiles) {
             drawProjectile(batch, p);
         }
+        drawHunterTanks(batch);
         drawPlayerTank(batch);
     }
 
@@ -89,6 +90,32 @@ public class Controller {
         }
 
         drawWithParameters(batch, texture, xValue, yValue, elemSize, tankRotation);
+    }
+
+    private void drawHunterTanks(SpriteBatch batch) {
+        HunterTank[] tanks = _terrain.getHunterTanks();
+        Texture texture = TextureFactory.getInstance().getHunterTank();
+
+        for (HunterTank tank : tanks) {
+            float xValue = tank.getX() * ELEMENT_SIZE;
+            float yValue = (_terrain.getHeight() - tank.getSize() - tank.getY()) * ELEMENT_SIZE;
+            float elemSize = ELEMENT_SIZE * tank.getSize();
+            int tankRotation;
+            switch (tank.getDirection()) {
+            case UP:
+                tankRotation = 0; break;
+            case LEFT:
+                tankRotation = 90; break;
+            case DOWN:
+                tankRotation = 180; break;
+            case RIGHT:
+                tankRotation = 270; break;
+            default:
+                tankRotation = 0;
+            }
+
+            drawWithParameters(batch, texture, xValue, yValue, elemSize, tankRotation);
+        }
     }
 
     private void drawProjectile(SpriteBatch batch, Projectile p) {
@@ -157,7 +184,7 @@ public class Controller {
     }
 
     private void drawWithParameters(SpriteBatch batch, Texture texture, float xValue, float yValue, float elemSize, int rotation) {
-	batch.draw(texture, xValue, yValue, elemSize/2, elemSize/2, elemSize, elemSize, 1, 1, rotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
+        batch.draw(texture, xValue, yValue, elemSize/2, elemSize/2, elemSize, elemSize, 1, 1, rotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
     }
 
 }

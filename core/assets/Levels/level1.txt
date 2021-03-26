@@ -1,5 +1,5 @@
 26:26
-      CC      CC          .
+H     CC      CC          .
       CC      CC          .
   BB  CC      BB  BB  BB  .
   BB  CC      BB  BB  BB  .
@@ -9,7 +9,7 @@
       BB          CC      .
 VV    BB    CC    BBVVBBCC.
 VV    BB    CC    BBVVBBCC.
-VVVV      BB    CC  VV    .
+VVVV      BB    CC  VVH   .
 VVVV      BB    CC  VV    .
   BBBBBBVVVVVVCC    VVBB  .
   BBBBBBVVVVVVCC    VVBB  .
