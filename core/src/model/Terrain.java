@@ -65,8 +65,23 @@ public class Terrain {
             return new ConcreteWall(col, row);
         case 'P':
             return new PlayerTank(col, row);
+            // TODO: Refacto tout ça parce que pas vraiment propre
         case 'H':
-            return new HunterTank(col, row);
+            return new HunterTank(col, row, Direction.UP, 0);
+        case 'h':
+            return new HunterTank(col, row, Direction.DOWN, 0);
+        case 'J':
+            return new HunterTank(col, row, Direction.LEFT, 0);
+        case 'j':
+            return new HunterTank(col, row, Direction.RIGHT, 0);
+        case 'K':
+            return new HunterTank(col, row, Direction.UP, 1);
+        case 'k':
+            return new HunterTank(col, row, Direction.DOWN, 1);
+        case 'L':
+            return new HunterTank(col, row, Direction.LEFT, 1);
+        case 'l':
+            return new HunterTank(col, row, Direction.RIGHT, 1);
         default:
             return new Empty(col, row);
         }

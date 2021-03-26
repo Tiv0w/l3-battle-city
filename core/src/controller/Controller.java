@@ -25,6 +25,7 @@ public class Controller {
 
     public void render(SpriteBatch batch) {
         handlePlayerTankMoving();
+        handleHunterTanksMoving();
         handlePlayerTankShooting();
         handleProjectilesMoving();
         draw(batch);
@@ -155,6 +156,14 @@ public class Controller {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             playerTank.move(0, delta, _terrain);
+        }
+    }
+
+    private void handleHunterTanksMoving() {
+        float delta = Gdx.graphics.getDeltaTime();
+        HunterTank[] hunterTanks = _terrain.getHunterTanks();
+        for (HunterTank tank : hunterTanks) {
+            tank.move(delta, _terrain);
         }
     }
 
