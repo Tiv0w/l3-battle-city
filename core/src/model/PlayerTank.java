@@ -57,15 +57,73 @@ public class PlayerTank extends GameElement {
             _y = 0;
         }
 
+        GameElement e;
+
         int colTile = (int)Math.floor(_x);
         int rowTile = (int)Math.floor(_y);
         System.out.println("colTile rowTile: " + colTile + " " + rowTile);
-
-        GameElement e = terrain.getElement(colTile, rowTile);
+        e = terrain.getElement(colTile, rowTile);
         if ((e instanceof BrickWall) || (e instanceof ConcreteWall)) {
-            _x = previous_x;
-            _y = previous_y;
+            _x = (int)Math.floor(previous_x);
+            _y = (int)Math.floor(previous_y);
         }
+
+        if (_direction == Direction.DOWN) {
+            rowTile = (int)Math.floor(_y) + (int)_size;
+            System.out.println("colTile rowTile: " + colTile + " " + rowTile);
+            e = terrain.getElement(colTile, rowTile);
+            if ((e instanceof BrickWall) || (e instanceof ConcreteWall)) {
+                _x = previous_x;
+                _y = previous_y;
+            }
+        }
+
+        if (_direction == Direction.UP) {
+            rowTile = (int)Math.floor(_y) + (int)_size;
+            System.out.println("colTile rowTile: " + colTile + " " + rowTile);
+            e = terrain.getElement(colTile, rowTile);
+            if ((e instanceof BrickWall) || (e instanceof ConcreteWall)) {
+                _x = previous_x;
+                _y = previous_y;
+            }
+        }
+
+        if (_direction == Direction.RIGHT) {
+            colTile = (int)Math.floor(_x) + (int)_size;
+            System.out.println("colTile rowTile: " + colTile + " " + rowTile);
+            e = terrain.getElement(colTile, rowTile);
+            if ((e instanceof BrickWall) || (e instanceof ConcreteWall)) {
+                _x = (int)Math.floor(_x);
+                _y = previous_y;
+            }
+            e = terrain.getElement(colTile, rowTile + 1);
+            if ((e instanceof BrickWall) || (e instanceof ConcreteWall)) {
+                _x = (int)Math.floor(_x);
+                _y = previous_y;
+            }
+        }
+
+        if (_direction == Direction.LEFT) {
+            System.out.println("colTile rowTile: " + colTile + " " + rowTile);
+            e = terrain.getElement(colTile, rowTile);
+            if ((e instanceof BrickWall) || (e instanceof ConcreteWall)) {
+                _x = (int)Math.floor(_x);
+                _y = previous_y;
+            }
+            e = terrain.getElement(colTile, rowTile + 1);
+            if ((e instanceof BrickWall) || (e instanceof ConcreteWall)) {
+                _x = (int)Math.floor(_x);
+                _y = previous_y;
+            }
+        }
+        // colTile = (int)Math.floor(_x) + (int)_size - 1;
+        // rowTile = (int)Math.floor(_y) + (int)_size - 1;
+        // System.out.println("colTile rowTile: " + colTile + " " + rowTile);
+        // e = terrain.getElement(colTile, rowTile);
+        // if ((e instanceof BrickWall) || (e instanceof ConcreteWall)) {
+        //     _x = previous_x;
+        //     _y = previous_y;
+        // }
     }
 
     public Projectile shoot() {
