@@ -72,19 +72,22 @@ public class HunterTank extends GameElement {
                 moveY = _speed;
             }
 
-            _x += moveX * delta;
-            _y += moveY * delta;
+            float newX = _x + moveX * delta;
+            float newY = _y + moveY * delta;
 
-            if (isColliding(terrain)) {
+            if (isColliding(newX, newY, terrain)) {
                 int newDirection = RANDOM.nextInt(4);
                 _direction = Direction.class.getEnumConstants()[newDirection];
+            } else {
+                _x = newX;
+                _y = newY;
             }
         }
     }
 
-    private boolean isColliding(Terrain terrain) {
-        int col = (int)Math.floor(_x);
-        int row = (int)Math.floor(_y);
+    private boolean isColliding(float newX, float newY, Terrain terrain) {
+        int col = (int)Math.floor(newX);
+        int row = (int)Math.floor(newY);
         GameElement[] e = new GameElement[4];
         e[0] = terrain.getElement(col, row);
         e[1] = terrain.getElement(col + (int)_size, row);
@@ -96,8 +99,9 @@ public class HunterTank extends GameElement {
                 return true;
             }
         }
-	// if (col < 0 ||)
-        return false;
+        return
+            (col < 0 || col > terrain.getWidth() - 1 - _size) ||
+            (row < 0 || row > terrain.getHeight() - 1 - _size);
     }
 
     public Projectile shoot() {
