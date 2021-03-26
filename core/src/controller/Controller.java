@@ -145,7 +145,7 @@ public class Controller {
 
     private void handleProjectilesMoving() {
         for (Projectile p: _projectiles) {
-            p.move(Gdx.graphics.getDeltaTime());
+            p.move(Gdx.graphics.getDeltaTime(), _terrain);
         }
     }
 

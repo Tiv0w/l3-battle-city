@@ -33,7 +33,7 @@ public class Projectile extends GameElement {
         return _direction;
     }
 
-    public void move(float delta) {
+    public void move(float delta, Terrain terrain) {
         float moveX = 0;
         float moveY = 0;
         if (_direction == Direction.LEFT) {
@@ -48,6 +48,26 @@ public class Projectile extends GameElement {
 
         _x += moveX;
         _y += moveY;
+        handleCollision(terrain);
+    }
+
+    private void handleCollision(Terrain terrain) {
+        int col = (int)Math.floor(_x);
+        int row = (int)Math.floor(_y);
+        GameElement[] e = new GameElement[4];
+        e[0] = terrain.getElement(col, row);
+        e[1] = terrain.getElement(col + (int)_size, row);
+        e[2] = terrain.getElement(col, row + (int)_size);
+        e[3] = terrain.getElement(col + (int)_size, row + (int)_size);
+
+        for (GameElement elem : e) {
+            if (elem instanceof ConcreteWall) {
+                _x = -1;
+                _y = -1;
+            } else if (elem instanceof BrickWall) {
+                terrain.emptyTile((int)elem.getX(), (int)elem.getY());
+            }
+        }
     }
 
     public boolean isOut() {

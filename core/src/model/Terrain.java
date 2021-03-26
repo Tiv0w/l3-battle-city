@@ -22,7 +22,7 @@ public class Terrain {
 
     public GameElement getElement(int col, int row) {
         if ((col < 0 || col > _width - 1) || (row < 0 || row > _height - 1)) {
-            System.out.println("L'élément n'existe pas.");
+            return null;
         }
         return _grid[row][col];
     }
@@ -81,5 +81,11 @@ public class Terrain {
             }
         }
         return null;
+    }
+
+    public void emptyTile(int col, int row) {
+        if ((col > 0 || col < _width - 1) || (row > 0 || row < _height - 1)) {
+            _grid[row][col] = new Empty(col, row);
+        }
     }
 }
