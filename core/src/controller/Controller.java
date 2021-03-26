@@ -88,7 +88,7 @@ public class Controller {
             tankRotation = 0;
         }
 
-        batch.draw(texture, xValue, yValue, elemSize/2, elemSize/2, elemSize, elemSize, 1, 1, tankRotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
+        drawWithParameters(batch, texture, xValue, yValue, elemSize, tankRotation);
     }
 
     private void drawProjectile(SpriteBatch batch, Projectile p) {
@@ -111,7 +111,7 @@ public class Controller {
             projectileRotation = 0;
         }
 
-        batch.draw(texture, xValue, yValue, elemSize/2, elemSize/2, elemSize, elemSize, 1, 1, projectileRotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
+        drawWithParameters(batch, texture, xValue, yValue, elemSize, projectileRotation);
     }
 
     private void handlePlayerTankMoving() {
@@ -154,6 +154,10 @@ public class Controller {
             if (_projectiles.get(i).isOut())
                 _projectiles.remove(i);
         }
+    }
+
+    private void drawWithParameters(SpriteBatch batch, Texture texture, float xValue, float yValue, float elemSize, int rotation) {
+	batch.draw(texture, xValue, yValue, elemSize/2, elemSize/2, elemSize, elemSize, 1, 1, rotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
     }
 
 }
