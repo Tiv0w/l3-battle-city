@@ -145,17 +145,25 @@ public class Controller {
     private void handlePlayerTankMoving() {
         float delta = Gdx.graphics.getDeltaTime();
         PlayerTank playerTank = _terrain.getPlayerTank();
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            playerTank.move(-delta, 0, _terrain);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ||
+            Gdx.input.isKeyPressed(Input.Keys.J) ||
+            Gdx.input.isKeyPressed(Input.Keys.A)) {
+            playerTank.move(-delta, 0, _terrain, delta);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            playerTank.move(delta, 0, _terrain);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) ||
+            Gdx.input.isKeyPressed(Input.Keys.L) ||
+            Gdx.input.isKeyPressed(Input.Keys.D)) {
+            playerTank.move(delta, 0, _terrain, delta);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            playerTank.move(0, -delta, _terrain);
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) ||
+            Gdx.input.isKeyPressed(Input.Keys.I) ||
+            Gdx.input.isKeyPressed(Input.Keys.W)) {
+            playerTank.move(0, -delta, _terrain, delta);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            playerTank.move(0, delta, _terrain);
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) ||
+            Gdx.input.isKeyPressed(Input.Keys.K) ||
+            Gdx.input.isKeyPressed(Input.Keys.S)) {
+            playerTank.move(0, delta, _terrain, delta);
         }
     }
 
