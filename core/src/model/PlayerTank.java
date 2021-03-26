@@ -39,23 +39,8 @@ public class PlayerTank extends GameElement {
         else if (y < 0) _direction = Direction.UP;
         else if (y > 0) _direction = Direction.DOWN;
 
-        // _x += x * _speed;
-        // _y += y * _speed;
-
         // float maxX = (Gdx.graphics.getWidth() / Controller.ELEMENT_SIZE) - _size;
         // float maxY = (Gdx.graphics.getHeight() / Controller.ELEMENT_SIZE) - _size;
-
-        // if (_x > maxX) {
-        //     _x = maxX;
-        // } else if (_x < 0) {
-        //     _x = 0;
-        // }
-
-        // if (_y > maxY) {
-        //     _y = maxY;
-        // } else if (_y < 0) {
-        //     _y = 0;
-        // }
 
         handleCollision(x, y, delta, terrain);
     }
