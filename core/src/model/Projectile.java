@@ -66,6 +66,8 @@ public class Projectile extends GameElement {
                 _y = -1;
             } else if (elem instanceof BrickWall) {
                 terrain.emptyTile((int)elem.getX(), (int)elem.getY());
+                _x = -1;
+                _y = -1;
             }
         }
     }
