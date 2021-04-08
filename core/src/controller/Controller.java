@@ -45,30 +45,19 @@ public class Controller {
         batch.draw(TextureFactory.getInstance().getBackground(), 0, 0);
         for (GameElement e : _terrain.getGrid()) {
             if (!(e instanceof Empty)) {
-                Texture t = null;
-                if (e instanceof BrickWall) {
-                    t = TextureFactory.getInstance().getBrickWall();
-                } else if (e instanceof ConcreteWall) {
-                    t = TextureFactory.getInstance().getConcreteWall();
-                } else if (e instanceof Vegetation) {
-                    t = TextureFactory.getInstance().getVegetation();
-                }
-
+                Texture t = TextureFactory.getInstance().getTexture(e);
                 float xValue = e.getX() * ELEMENT_SIZE;
                 // Needed otherwise it is upside-down
                 float yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * ELEMENT_SIZE;
-
-                if (t != null) {
-                    float elemSize = ELEMENT_SIZE * e.getSize();
-                    batch.draw(t, xValue, yValue, elemSize, elemSize);
-                }
+                float elemSize = ELEMENT_SIZE * e.getSize();
+                batch.draw(t, xValue, yValue, elemSize, elemSize);
             }
         }
     }
 
     private void drawPlayerTank(SpriteBatch batch) {
         PlayerTank tank = _terrain.getPlayerTank();
-        Texture texture = TextureFactory.getInstance().getPlayerTank();
+        Texture texture = TextureFactory.getInstance().getTexture(tank);
 
         float xValue = tank.getX() * ELEMENT_SIZE;
         float yValue = (_terrain.getHeight() - tank.getSize() - tank.getY()) * ELEMENT_SIZE;
@@ -92,7 +81,7 @@ public class Controller {
 
     private void drawHunterTanks(SpriteBatch batch) {
         HunterTank[] tanks = _terrain.getHunterTanks();
-        Texture texture = TextureFactory.getInstance().getHunterTank();
+        Texture texture = TextureFactory.getInstance().getTexture(tanks[0]);
 
         for (HunterTank tank : tanks) {
             float xValue = tank.getX() * ELEMENT_SIZE;
@@ -117,7 +106,7 @@ public class Controller {
     }
 
     private void drawProjectile(SpriteBatch batch, Projectile p) {
-        Texture texture = TextureFactory.getInstance().getProjectile();
+        Texture texture = TextureFactory.getInstance().getTexture(p);
 
         float xValue = p.getX() * ELEMENT_SIZE;
         float yValue = (_terrain.getHeight() - p.getSize() - p.getY()) * ELEMENT_SIZE;

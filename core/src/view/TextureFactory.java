@@ -4,42 +4,33 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import java.io.File;
 import java.util.HashMap;
+import model.*;
 
 public class TextureFactory {
-    private static enum TextureEnum {
-        BACKGROUND,
-        BRICK_WALL,
-        CONCRETE_WALL,
-        HUNTER_FLAG,
-        HUNTER_TANK,
-        PLAYER_FLAG,
-        PLAYER_TANK,
-        PROJECTILE,
-        VEGETATION,
-    }
-    private static HashMap<TextureEnum, Texture> _texturesMap;
+    private static HashMap<Class<?>, Texture> _texturesMap;
+    private static Texture _background;
     private static TextureFactory _instance;
 
     private TextureFactory() {
         String _imagesPath = "../assets/Images/";
-        _texturesMap = new HashMap<TextureEnum, Texture>();
-        _texturesMap.put(TextureEnum.BACKGROUND,
-                         new Texture(Gdx.files.internal(_imagesPath + "Fond.png")));
-        _texturesMap.put(TextureEnum.BRICK_WALL,
+        _background = new Texture(Gdx.files.internal(_imagesPath + "Fond.png"));
+
+        _texturesMap = new HashMap<Class<?>, Texture>();
+        _texturesMap.put(BrickWall.class,
                          new Texture(Gdx.files.internal(_imagesPath + "MurBrique.png")));
-        _texturesMap.put(TextureEnum.CONCRETE_WALL,
+        _texturesMap.put(ConcreteWall.class,
                          new Texture(Gdx.files.internal(_imagesPath + "MurRenforce.png")));
-        _texturesMap.put(TextureEnum.HUNTER_FLAG,
-                         new Texture(Gdx.files.internal(_imagesPath + "ChasseurDrapeau.png")));
-        _texturesMap.put(TextureEnum.HUNTER_TANK,
+        // _texturesMap.put(HunterFlag.class,
+        //                  new Texture(Gdx.files.internal(_imagesPath + "ChasseurDrapeau.png")));
+        _texturesMap.put(HunterTank.class,
                          new Texture(Gdx.files.internal(_imagesPath + "ChasseurChar.png")));
-        _texturesMap.put(TextureEnum.PLAYER_FLAG,
-                         new Texture(Gdx.files.internal(_imagesPath + "Drapeau.png")));
-        _texturesMap.put(TextureEnum.PLAYER_TANK,
+        // _texturesMap.put(Flag.class,
+        //                  new Texture(Gdx.files.internal(_imagesPath + "Drapeau.png")));
+        _texturesMap.put(PlayerTank.class,
                          new Texture(Gdx.files.internal(_imagesPath + "CharJoueur.png")));
-        _texturesMap.put(TextureEnum.PROJECTILE,
+        _texturesMap.put(Projectile.class,
                          new Texture(Gdx.files.internal(_imagesPath + "Projectile.png")));
-        _texturesMap.put(TextureEnum.VEGETATION,
+        _texturesMap.put(Vegetation.class,
                          new Texture(Gdx.files.internal(_imagesPath + "Arbre.png")));
     }
 
@@ -51,38 +42,10 @@ public class TextureFactory {
     }
 
     public Texture getBackground() {
-        return _texturesMap.get(TextureEnum.BACKGROUND);
+        return _background;
     }
 
-    public Texture getBrickWall() {
-        return _texturesMap.get(TextureEnum.BRICK_WALL);
-    }
-
-    public Texture getConcreteWall() {
-        return _texturesMap.get(TextureEnum.CONCRETE_WALL);
-    }
-
-    public Texture getHunterFlag() {
-        return _texturesMap.get(TextureEnum.HUNTER_FLAG);
-    }
-
-    public Texture getHunterTank() {
-        return _texturesMap.get(TextureEnum.HUNTER_TANK);
-    }
-
-    public Texture getPlayerFlag() {
-        return _texturesMap.get(TextureEnum.PLAYER_FLAG);
-    }
-
-    public Texture getPlayerTank() {
-        return _texturesMap.get(TextureEnum.PLAYER_TANK);
-    }
-
-    public Texture getProjectile() {
-        return _texturesMap.get(TextureEnum.PROJECTILE);
-    }
-
-    public Texture getVegetation() {
-        return _texturesMap.get(TextureEnum.VEGETATION);
+    public Texture getTexture(GameElement e) {
+        return _texturesMap.get(e.getClass());
     }
 }
