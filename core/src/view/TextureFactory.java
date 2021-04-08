@@ -12,6 +12,7 @@ public class TextureFactory {
         CONCRETE_WALL,
         HUNTER_FLAG,
         HUNTER_TANK,
+        PLANE,
         PLAYER_FLAG,
         PLAYER_TANK,
         PROJECTILE,
@@ -33,6 +34,8 @@ public class TextureFactory {
                          new Texture(Gdx.files.internal(_imagesPath + "ChasseurDrapeau.png")));
         _texturesMap.put(TextureEnum.HUNTER_TANK,
                          new Texture(Gdx.files.internal(_imagesPath + "ChasseurChar.png")));
+        _texturesMap.put(TextureEnum.PLANE,
+                         new Texture(Gdx.files.internal(_imagesPath + "Avion.png")));
         _texturesMap.put(TextureEnum.PLAYER_FLAG,
                          new Texture(Gdx.files.internal(_imagesPath + "Drapeau.png")));
         _texturesMap.put(TextureEnum.PLAYER_TANK,
@@ -68,6 +71,10 @@ public class TextureFactory {
 
     public Texture getHunterTank() {
         return _texturesMap.get(TextureEnum.HUNTER_TANK);
+    }
+
+    public Texture getPlane() {
+        return _texturesMap.get(TextureEnum.PLANE);
     }
 
     public Texture getPlayerFlag() {

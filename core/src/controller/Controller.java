@@ -9,18 +9,23 @@ import java.util.ArrayList;
 import model.*;
 import view.BattleScreen;
 import view.TextureFactory;
+import com.badlogic.gdx.utils.TimeUtils;
 
 
 public class Controller {
     public static final int ELEMENT_SIZE = 16;
     public static final int PROJECTILES_MAX = 3;
+    // private static int START_TIME;
     Terrain _terrain;
     boolean _playerShooting = false;
     List<Projectile> _projectiles;
+    Plane _plane;
 
     public Controller(int levelNumber) {
         _terrain = new Terrain(levelNumber);
         _projectiles = new ArrayList<Projectile>();
+        _plane = new Plane();
+        // START_TIME = TimeUtils.millis();
     }
 
     public void render(SpriteBatch batch) {
@@ -39,6 +44,7 @@ public class Controller {
         }
         drawHunterTanks(batch);
         drawPlayerTank(batch);
+        drawPlane(batch);
     }
 
     private void drawStaticElements(SpriteBatch batch) {
@@ -141,6 +147,17 @@ public class Controller {
 
         drawWithParameters(batch, texture, xValue, yValue, elemSize, projectileRotation);
     }
+
+    private void drawPlane(SpriteBatch batch) {
+        Texture texture = TextureFactory.getInstance().getPlane();
+
+        float xValue = _plane.getX() * ELEMENT_SIZE;
+        float yValue = (_terrain.getHeight() - _plane.getSize() - _plane.getY()) * ELEMENT_SIZE;
+        float elemSize = ELEMENT_SIZE * _plane.getSize();
+        int planeRotation = 35;
+        drawWithParameters(batch, texture, xValue, yValue, elemSize, planeRotation);
+    }
+
 
     private void handlePlayerTankMoving() {
         float delta = Gdx.graphics.getDeltaTime();
