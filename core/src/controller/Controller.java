@@ -43,27 +43,24 @@ public class Controller {
 
     private void drawStaticElements(SpriteBatch batch) {
         batch.draw(TextureFactory.getInstance().getBackground(), 0, 0);
-        for (int row = 0; row < _terrain.getHeight(); row++) {
-            for (int col = 0; col < _terrain.getWidth(); col++) {
-                GameElement e = _terrain.getElement(col, row);
-                if (!(e instanceof Empty)) {
-                    Texture t = null;
-                    if (e instanceof BrickWall) {
-                        t = TextureFactory.getInstance().getBrickWall();
-                    } else if (e instanceof ConcreteWall) {
-                        t = TextureFactory.getInstance().getConcreteWall();
-                    } else if (e instanceof Vegetation) {
-                        t = TextureFactory.getInstance().getVegetation();
-                    }
+        for (GameElement e : _terrain.getGrid()) {
+            if (!(e instanceof Empty)) {
+                Texture t = null;
+                if (e instanceof BrickWall) {
+                    t = TextureFactory.getInstance().getBrickWall();
+                } else if (e instanceof ConcreteWall) {
+                    t = TextureFactory.getInstance().getConcreteWall();
+                } else if (e instanceof Vegetation) {
+                    t = TextureFactory.getInstance().getVegetation();
+                }
 
-                    float xValue = e.getX() * ELEMENT_SIZE;
-                    // Needed otherwise it is upside-down
-                    float yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * ELEMENT_SIZE;
+                float xValue = e.getX() * ELEMENT_SIZE;
+                // Needed otherwise it is upside-down
+                float yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * ELEMENT_SIZE;
 
-                    if (t != null) {
-                        float elemSize = ELEMENT_SIZE * e.getSize();
-                        batch.draw(t, xValue, yValue, elemSize, elemSize);
-                    }
+                if (t != null) {
+                    float elemSize = ELEMENT_SIZE * e.getSize();
+                    batch.draw(t, xValue, yValue, elemSize, elemSize);
                 }
             }
         }

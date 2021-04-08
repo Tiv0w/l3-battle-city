@@ -2,10 +2,13 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Terrain {
-    public GameElement[][] _grid;
+    ArrayList<GameElement> _grid;
+    ArrayList<HunterTank> _hunters;
+    PlayerTank _playerTank;
     int _width, _height;
 
     public Terrain(int levelNumber) {
@@ -24,7 +27,12 @@ public class Terrain {
         if ((col < 0 || col > _width - 1) || (row < 0 || row > _height - 1)) {
             return null;
         }
-        return _grid[row][col];
+        for (GameElement elem : _grid) {
+            if (elem.getX() == row && elem.getY() == col) {
+                return elem;
+            }
+        }
+        return null;
     }
 
     public void changeTerrain(int levelNumber) {
@@ -39,13 +47,14 @@ public class Terrain {
             String[] levelParameters = reader.nextLine().split(":");
             _width = Integer.parseInt(levelParameters[0]);
             _height = Integer.parseInt(levelParameters[1]);
-            _grid = new GameElement[_height][_width];
+            _grid = new ArrayList<GameElement>();
+            _hunters = new ArrayList<HunterTank>();
 
             for (int row = 0; row < _height; row++) {
                 String inputLine = reader.nextLine();
                 if (inputLine != null) {
                     for (int col = 0; col < _width; col++) {
-                        _grid[row][col] = parseElementCharacter(inputLine.charAt(col), col, row);
+                        _grid.add(parseElementCharacter(inputLine.charAt(col), col, row));
                     }
                 }
             }
@@ -56,6 +65,7 @@ public class Terrain {
     }
 
     private GameElement parseElementCharacter(char elementCharacter, int col, int row) {
+        GameElement e;
         switch (elementCharacter) {
         case 'V':
             return new Vegetation(col, row);
@@ -64,61 +74,66 @@ public class Terrain {
         case 'C':
             return new ConcreteWall(col, row);
         case 'P':
-            return new PlayerTank(col, row);
+            e = new PlayerTank(col, row);
+            _playerTank = (PlayerTank) e;
+            return e;
             // TODO: Refacto tout ça parce que pas vraiment propre
         case 'H':
-            return new HunterTank(col, row, Direction.UP, 0);
+            e = new HunterTank(col, row, Direction.UP, 0);
+            _hunters.add((HunterTank) e);
+            return e;
         case 'h':
-            return new HunterTank(col, row, Direction.DOWN, 0);
+            e = new HunterTank(col, row, Direction.DOWN, 0);
+            _hunters.add((HunterTank) e);
+            return e;
         case 'J':
-            return new HunterTank(col, row, Direction.LEFT, 0);
+            e = new HunterTank(col, row, Direction.LEFT, 0);
+            _hunters.add((HunterTank) e);
+            return e;
         case 'j':
-            return new HunterTank(col, row, Direction.RIGHT, 0);
+            e = new HunterTank(col, row, Direction.RIGHT, 0);
+            _hunters.add((HunterTank) e);
+            return e;
         case 'K':
-            return new HunterTank(col, row, Direction.UP, 1);
+            e = new HunterTank(col, row, Direction.UP, 1);
+            _hunters.add((HunterTank) e);
+            return e;
         case 'k':
-            return new HunterTank(col, row, Direction.DOWN, 1);
+            e = new HunterTank(col, row, Direction.DOWN, 1);
+            _hunters.add((HunterTank) e);
+            return e;
         case 'L':
-            return new HunterTank(col, row, Direction.LEFT, 1);
+            e = new HunterTank(col, row, Direction.LEFT, 1);
+            _hunters.add((HunterTank) e);
+            return e;
         case 'l':
-            return new HunterTank(col, row, Direction.RIGHT, 1);
+            e = new HunterTank(col, row, Direction.RIGHT, 1);
+            _hunters.add((HunterTank) e);
+            return e;
         default:
             return new Empty(col, row);
         }
     }
 
+    public ArrayList<GameElement> getGrid() {
+        return _grid;
+    }
+
     public PlayerTank getPlayerTank() {
-        for (int row = 0; row < _height; row++) {
-            for (int col = 0; col < _width; col++) {
-                GameElement elem = getElement(col, row);
-                if (elem instanceof PlayerTank) {
-                    PlayerTank tank = (PlayerTank)elem;
-                    return tank;
-                }
-            }
-        }
-        return null;
+        return _playerTank;
     }
 
     public HunterTank[] getHunterTanks() {
-        HunterTank[] tanks = new HunterTank[2];
-        int index = 0;
-        for (int row = 0; row < _height; row++) {
-            for (int col = 0; col < _width; col++) {
-                GameElement elem = getElement(col, row);
-                if (elem instanceof HunterTank) {
-                    HunterTank tank = (HunterTank)elem;
-                    tanks[index] = tank;
-                    index++;
-                }
-            }
-        }
-        return tanks;
+        return _hunters.toArray(new HunterTank[2]);
     }
 
     public void emptyTile(int col, int row) {
         if ((col > 0 || col < _width - 1) || (row > 0 || row < _height - 1)) {
-            _grid[row][col] = new Empty(col, row);
+            for (int i = 0; i < _grid.size(); i++) {
+                if (_grid.get(i).getX() == col && _grid.get(i).getY() == row) {
+                    _grid.set(i, new Empty(col, row));
+                }
+            }
         }
     }
 }
