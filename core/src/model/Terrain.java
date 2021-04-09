@@ -28,7 +28,7 @@ public class Terrain {
             return null;
         }
         for (GameElement elem : _grid) {
-            if (elem.getX() == row && elem.getY() == col) {
+            if (elem.getX() == col && elem.getY() == row) {
                 return elem;
             }
         }
