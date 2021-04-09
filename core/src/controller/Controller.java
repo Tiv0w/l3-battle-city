@@ -84,7 +84,7 @@ public class Controller {
         Rectangle hitbox = tank.getHitbox();
         _shapeRenderer.rect(
             hitbox.getX() * ELEMENT_SIZE,
-            (_terrain.getHeight() - hitbox.getY()) * ELEMENT_SIZE,
+            (_terrain.getHeight() - hitbox.getY() - 1) * ELEMENT_SIZE,
             hitbox.getWidth() * ELEMENT_SIZE,
             hitbox.getHeight() * ELEMENT_SIZE);
 

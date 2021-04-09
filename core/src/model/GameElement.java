@@ -6,7 +6,7 @@ public class GameElement {
     float _x, _y;
     float _size;
     Rectangle _hitbox;
-    public static float TOLERANCE = 0.6f;
+    public static float TOLERANCE = 0.2f;
 
     public GameElement(float x, float y) {
         _x = x;
@@ -20,7 +20,7 @@ public class GameElement {
         _y = y;
         _size = size;
         _hitbox = new Rectangle(x + TOLERANCE/2,
-                                y + _size - TOLERANCE/2,
+                                y + _size/2 + TOLERANCE/2,
                                 _size - TOLERANCE,
                                 _size - TOLERANCE);
     }
@@ -40,7 +40,7 @@ public class GameElement {
 
     public void setY(float y) {
         _y = y;
-        _hitbox.setY(y + _size - TOLERANCE/2);
+        _hitbox.setY(y + _size/2 + TOLERANCE/2);
     }
 
     public float getSize() {
