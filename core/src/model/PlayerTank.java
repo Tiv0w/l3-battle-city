@@ -49,19 +49,16 @@ public class PlayerTank extends GameElement {
     }
 
     private void handleCollision(float previous_x, float previous_y, float delta, Terrain terrain) {
-        // System.out.println("newX Y " + newX + " " + newY);
-        System.out.println("DELTA: " + delta);
-
-        if (!isInsideTerrain(terrain) || isColliding2(terrain)) {
+        if (!isInsideTerrain(terrain) || isColliding(terrain)) {
             System.out.println("COLLISION DETECTEE");
             setX(previous_x);
             setY(previous_y);
-            System.out.println(_x);
-            System.out.println(_y);
+            // System.out.println(_x);
+            // System.out.println(_y);
         }
     }
 
-    private boolean isColliding2(Terrain terrain) {
+    private boolean isColliding(Terrain terrain) {
         for (GameElement e : terrain.getGrid()) {
             if ((e instanceof StaticGameElement) &&
                 !(e instanceof Vegetation) &&
