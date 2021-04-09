@@ -47,19 +47,50 @@ public class HunterTank extends GameElement {
         if (_strategy == STRATEGY_HUNTING) {
             float xDifference = playerTank.getX() - _x;
             float yDifference = playerTank.getY() - _y;
+            float moveX = 0;
+            float moveY = 0;
+            Direction newXDirection = _direction;
+            Direction newYDirection = _direction;
             if (xDifference > delta) {
-                _x += delta * _speed;
-                _direction = Direction.RIGHT;
+                moveX = _speed;
+                newXDirection = Direction.RIGHT;
             } else if (xDifference < -delta) {
-                _x -= delta * _speed;
-                _direction = Direction.LEFT;
-            } else if (yDifference > delta) {
-                _y += delta * _speed;
-                _direction = Direction.DOWN;
-            } else if (yDifference < -delta) {
-                _y -= delta * _speed;
-                _direction = Direction.UP;
+                moveX = -_speed;
+                newXDirection = Direction.LEFT;
             }
+            if (yDifference > delta) {
+                moveY = _speed;
+                newYDirection = Direction.DOWN;
+            } else if (yDifference < -delta) {
+                moveY = -_speed;
+                newYDirection = Direction.UP;
+            }
+
+            float previousX = _x;
+            float previousY = _y;
+            Direction previousDirection = _direction;
+
+            if (-delta > xDifference || xDifference > delta) {
+                setX(_x + moveX * delta);
+                _direction = newXDirection;
+                if (!isInsideTerrain(terrain) || isColliding(terrain)) {
+                    setX(previousX);
+                    setY(_y + moveY * delta);
+                    _direction = newYDirection;
+                    if (!isInsideTerrain(terrain) || isColliding(terrain)) {
+                        setY(previousY);
+                        _direction = previousDirection;
+                    }
+                }
+            } else {
+                setY(_y + moveY * delta);
+                _direction = newYDirection;
+                if (!isInsideTerrain(terrain) || isColliding(terrain)) {
+                    setY(previousY);
+                    _direction = previousDirection;
+                }
+            }
+
         } else if (_strategy == STRATEGY_RANDOM) {
             float moveX = 0;
             float moveY = 0;
