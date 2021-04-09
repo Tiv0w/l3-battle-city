@@ -2,8 +2,12 @@ package controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 import java.util.List;
 import java.util.ArrayList;
 import model.*;
@@ -17,10 +21,12 @@ public class Controller {
     Terrain _terrain;
     boolean _playerShooting = false;
     List<Projectile> _projectiles;
+    ShapeRenderer _shapeRenderer;
 
     public Controller(int levelNumber) {
         _terrain = new Terrain(levelNumber);
         _projectiles = new ArrayList<Projectile>();
+        _shapeRenderer = new ShapeRenderer();
     }
 
     public void render(SpriteBatch batch) {
@@ -33,15 +39,19 @@ public class Controller {
     }
 
     public void draw(SpriteBatch batch) {
+        _shapeRenderer.begin(ShapeType.Line);
         drawStaticElements(batch);
         for (Projectile p: _projectiles) {
             drawProjectile(batch, p);
         }
         drawHunterTanks(batch);
         drawPlayerTank(batch);
+        // _shapeRenderer.identity();
+        _shapeRenderer.end();
     }
 
     private void drawStaticElements(SpriteBatch batch) {
+        _shapeRenderer.setColor(Color.GREEN);
         batch.draw(TextureFactory.getInstance().getBackground(), 0, 0);
         for (GameElement e : _terrain.getGrid()) {
             if (!(e instanceof Empty)) {
@@ -51,6 +61,17 @@ public class Controller {
                 float yValue = ((_terrain.getHeight() - e.getSize()) - e.getY()) * ELEMENT_SIZE;
                 float elemSize = ELEMENT_SIZE * e.getSize();
                 batch.draw(t, xValue, yValue, elemSize, elemSize);
+                Rectangle hitbox = e.getHitbox();
+                if (e instanceof Vegetation) {
+                    _shapeRenderer.setColor(Color.GREEN);
+                } else {
+                    _shapeRenderer.setColor(Color.BLUE);
+                }
+                _shapeRenderer.rect(
+                    hitbox.getX() * ELEMENT_SIZE,
+                    (_terrain.getHeight() - hitbox.getY()) * ELEMENT_SIZE,
+                    hitbox.getWidth() * ELEMENT_SIZE,
+                    hitbox.getHeight() * ELEMENT_SIZE);
             }
         }
     }
@@ -59,10 +80,18 @@ public class Controller {
         PlayerTank tank = _terrain.getPlayerTank();
         Texture texture = TextureFactory.getInstance().getTexture(tank);
 
+        _shapeRenderer.setColor(Color.RED);
+        Rectangle hitbox = tank.getHitbox();
+        _shapeRenderer.rect(
+            hitbox.getX() * ELEMENT_SIZE,
+            (_terrain.getHeight() - hitbox.getY()) * ELEMENT_SIZE,
+            hitbox.getWidth() * ELEMENT_SIZE,
+            hitbox.getHeight() * ELEMENT_SIZE);
+
         float xValue = tank.getX() * ELEMENT_SIZE;
         float yValue = (_terrain.getHeight() - tank.getSize() - tank.getY()) * ELEMENT_SIZE;
         float elemSize = ELEMENT_SIZE * tank.getSize();
-        int tankRotation;
+        int tankRotation = 0;
         switch (tank.getDirection()) {
         case UP:
             tankRotation = 0; break;
@@ -72,8 +101,6 @@ public class Controller {
             tankRotation = 180; break;
         case RIGHT:
             tankRotation = 270; break;
-        default:
-            tankRotation = 0;
         }
 
         drawWithParameters(batch, texture, xValue, yValue, elemSize, tankRotation);
