@@ -1,6 +1,7 @@
 package model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 import controller.Controller;
 import java.util.Random;
 
@@ -72,36 +73,37 @@ public class HunterTank extends GameElement {
                 moveY = _speed;
             }
 
-            float newX = _x + moveX * delta;
-            float newY = _y + moveY * delta;
+            float previousX = _x;
+            float previousY = _y;
 
-            if (isColliding(newX, newY, terrain)) {
+            setX(_x + moveX * delta);
+            setY(_y + moveY * delta);
+
+            if (!isInsideTerrain(terrain) || isColliding(terrain)) {
                 int newDirection = RANDOM.nextInt(4);
                 _direction = Direction.class.getEnumConstants()[newDirection];
-            } else {
-                _x = newX;
-                _y = newY;
+                setX(previousX);
+                setY(previousY);
             }
         }
     }
 
-    private boolean isColliding(float newX, float newY, Terrain terrain) {
-        int col = (int)Math.floor(newX);
-        int row = (int)Math.floor(newY);
-        GameElement[] e = new GameElement[4];
-        e[0] = terrain.getElement(col, row);
-        e[1] = terrain.getElement(col + (int)_size, row);
-        e[2] = terrain.getElement(col, row + (int)_size);
-        e[3] = terrain.getElement(col + (int)_size, row + (int)_size);
-
-        for (GameElement elem : e) {
-            if (elem instanceof ConcreteWall || elem instanceof BrickWall) {
+    private boolean isColliding(Terrain terrain) {
+        for (GameElement e : terrain.getGrid()) {
+            if ((e instanceof StaticGameElement) &&
+                !(e instanceof Vegetation) &&
+                !(e instanceof Empty) &&
+                !(e.equals(this)) &&
+                _hitbox.overlaps(e.getHitbox())) {
                 return true;
             }
         }
-        return
-            (col < 0 || col > terrain.getWidth() - 1 - _size) ||
-            (row < 0 || row > terrain.getHeight() - 1 - _size);
+        return false;
+    }
+
+    public boolean isInsideTerrain(Terrain terrain) {
+        Rectangle terrainRectangle = new Rectangle(0, 1, terrain.getWidth(), terrain.getHeight());
+        return terrainRectangle.contains(_hitbox);
     }
 
     public Projectile shoot() {
